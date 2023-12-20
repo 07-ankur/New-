@@ -1,38 +1,25 @@
-import {useEffect, useContext} from 'react'
+import { useEffect, useContext } from "react";
+import { useGlobalContext } from "./context";
 
 const Stories = () => {
+  const { hits, nbPages } = useGlobalContext();
 
-  let isLoading = true;
-
-  let API = "https://hn.algolia.com/api/v1/search?query=react";
-
-  const fetchApiData = async (API) => {
-    try {
-      const response = await fetch(API);
-      const data = await response.json();
-      console.log(data);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  useEffect(() => {
-    fetchApiData(API)
-  }, [])
-
-  if(isLoading) {
-    return (
-      <h2>
-        Loading...
-      </h2>
-    )
-  }
+  // if(isLoading) {
+  //   return (
+  //     <h2>
+  //       Loading...
+  //     </h2>
+  //   )
+  // }
 
   return (
-    <h2>
-      Tech Buzz Posts
-    </h2>
-  )
-}
+    <>
+      <h2>Tech Buzz Posts</h2>
+      {hits.map((curPost) => {
+        return <h2>{curPost.title}</h2>
+      })}
+    </>
+  );
+};
 
 export default Stories;
