@@ -17,6 +17,9 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const fetchApiData = async (url) => {
+
+    dispatch({type:"SET_LOADING"});
+
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -24,7 +27,7 @@ const AppProvider = ({ children }) => {
       dispatch({
         type: "GET_STORIES",
         payload:{
-          hit: data.hits,
+          hits: data.hits,
           nbPages: data.nbPages,
         },
       })
